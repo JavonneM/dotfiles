@@ -1,0 +1,80 @@
+/* 
+ * Waybar css
+ *
+*/
+@define-color theme-color-window-background rgba(8, 8, 8, 0);
+@define-color theme-color-border #3498db;
+@define-color theme-color-box-shadow rgba(0, 0, 0, 0.1);
+@define-color theme-color-pill-color rgba(255, 255, 255, 0.1);
+
+/*@define-shadow tt 0 4px 6px rgba(0, 254, 0, 1);*/
+
+window#waybar {
+    background-color: @theme-color-window-background;
+    /* DEBUG */
+}
+
+/* module styles */
+.modules-center {
+    border: 2px solid @theme-color-border;
+    border-radius: 15px;
+    margin: 4px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: @theme-color-pill-color;
+}
+
+.modules-right {
+    margin: 4px;
+    /* Light gray with 70% opacity */
+    border-radius: 15px;
+    /* Rounded corners with a 15px radius */
+    padding-left: 5px;
+    padding-right: 5px;
+    /* Optional: Padding inside the container */
+    box-shadow: 0 4px 6px @theme-color-box-shadow;
+    border: 2px solid @theme-color-border;
+    background-color: @theme-color-pill-color;
+}
+
+.modules-left {
+    margin-left: 10px;
+    margin: 4px;
+}
+
+/* left modules */
+#custom-media {
+    /* Light gray with 70% opacity */
+    border-radius: 15px;
+    /* Rounded corners with a 15px radius */
+    padding-left: 5px;
+    padding-right: 5px;
+    /* Optional: Padding inside the container */
+    box-shadow: 0 4px 6px @theme-color-box-shadow;
+    background-color: rgba(8, 8, 8, 0.25);
+    border: 2px solid @theme-color-border;
+    background-color: @theme-color-pill-color;
+
+    /* DEBUG */
+    /* background-color: rgba(8, 100, 8, 1); */
+}
+
+/* left modules custom */
+#custom-media {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+/* right modules */
+#clock,
+#custom-power,
+#custom-weather,
+#cpu,
+#mpd,
+#network,
+#submap,
+#tray,
+#pulseaudio {
+    padding-left: 5px;
+    padding-right: 5px;
+}

@@ -1,5 +1,0 @@
-require("core.dap.adapters.dap-go")
-require("core.dap.adapters.dap-python")
---require("core.dap.adapters.dap-flutter")
-require("core.dap.adapters.dap-node")
---require("core.dap.adapters.dap-node-old")

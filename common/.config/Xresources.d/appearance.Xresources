@@ -1,0 +1,16 @@
+!! URxvt Appearance
+URxvt.font: xft:FiraCode Nerd Font Mono:style=Regular:size=11:minspace=False
+!!URxvt.letterSpace: -1 !! this breaks font glyphs
+URxvt.lineSpace: 0
+!!URxvt.geometry: 92x24
+!!URxvt.internalBorder: 12 
+URxvt.cursorBlink: true
+URxvt.cursorUnderline: false
+URxvt.saveline: 2048
+URxvt.scrollBar: false
+URxvt.scrollBar_right: false
+URxvt.urgentOnBell: true
+!!URxvt.depth: 24
+
+
+

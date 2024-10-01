@@ -1,0 +1,11 @@
+!! Perl Extensions
+#include ".config/Xresources.d/extensions.Xresources"
+!! Colorscheme
+#include ".config/Xresources.d/appearance.Xresources"
+!! URxvt Appearance
+#include ".config/Xresources.d/colors.default.Xresources"
+!!#include ".config/Xresources.d/colors.theme1.Xresources"
+
+!! Common Keybinds for Navigations
+#include ".config/Xresources.d/shortcuts.Xresources"
+

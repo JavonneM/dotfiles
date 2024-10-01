@@ -2,12 +2,12 @@
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
 # setup bash auto complete and git autocomplete
-brew install git bash-completion stow
+brew install git bash-completion stow 
 echo "[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion" >> ~/.bash_profile
 
 # macos dot requirements
 brew tap homebrew/cask-fonts
-brew install tmux nvim kitty font-fira-mono-nerd-font
+brew install tmux nvim kitty font-fira-mono-nerd-font atuin
 
 # mobile development
 # install cocoapods
@@ -19,3 +19,4 @@ configure_git_config
 install_oh_my_zsh
 
 stow common
+stow work

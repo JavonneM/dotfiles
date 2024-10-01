@@ -1,3 +1,4 @@
-.gitignore
+.git*
+.gitmodules
 README.md
 LICENSE

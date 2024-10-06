@@ -14,26 +14,26 @@ const date = Variable("", {
 // then you can simply instantiate one by calling it
 
 function Workspaces({ monitor = 0 }) {
-    const activeId = hyprland.active.workspace.bind("id")
-    const workspaces = hyprland.bind("workspaces")
+    const activeWorkspaceId = hyprland.active.workspace.bind("id")
+    const workspacesForMonitor = hyprland.bind("workspaces")
         .as(ws => ws.
             // Remove Scratch ws
             filter((v) => v.name != "special:magic").
-            filter((v) => v.monitorID != monitor).
-            // Make clickable
-            map(
-                ({ id }) =>
-                    Widget.Button({
-                        on_clicked: () => hyprland.messageAsync(`dispatch workspace ${id}`),
-                        child: Widget.Label(`${id}`),
-                        class_name: activeId.as(i => `${i === id ? "focused" : ""}`),
-                    })
-            )
+            filter((v) => v.monitorID == monitor)
+        )
+    const merged = Utils.merge([activeWorkspaceId, workspacesForMonitor], (activeId, ws) => {
+        return ws.map(
+            (ws) => Widget.Button({
+                on_clicked: () => hyprland.messageAsync(`dispatch workspace ${ws.id}`),
+                child: Widget.Label(`${ws.id} ${activeId == ws.id ? "" : ""}`),
+                class_name: `${activeId === ws.id ? "focused" : ""}`,
+            })
         )
 
+    })
     return Widget.Box({
         class_name: "workspaces",
-        children: workspaces,
+        children: merged,
     })
 }
 
@@ -77,7 +77,7 @@ function Media() {
     const label = Utils.watch("", mpris, "player-changed", () => {
         if (mpris.players[0]) {
             const { track_artists, track_title } = mpris.players[0]
-            return `${track_artists.join(", ")} - ${track_title}`
+            return `${track_artists.join(", ")} - ${track_title} `
         } else {
             return "Nothing is playing"
         }
@@ -106,7 +106,7 @@ function Volume() {
         const icon = audio.speaker.is_muted ? 0 : [101, 67, 34, 1, 0].find(
             threshold => threshold <= audio.speaker.volume * 100)
 
-        return `audio-volume-${icons[icon]}-symbolic`
+        return `audio - volume - ${icons[icon]} -symbolic`
     }
 
     const icon = Widget.Icon({
@@ -133,7 +133,7 @@ function Volume() {
 function BatteryLabel() {
     const value = battery.bind("percent").as(p => p > 0 ? p / 100 : 0)
     const icon = battery.bind("percent").as(p =>
-        `battery-level-${Math.floor(p / 10) * 10}-symbolic`)
+        `battery - level - ${Math.floor(p / 10) * 10} -symbolic`)
 
     return Widget.Box({
         class_name: "battery",
@@ -170,7 +170,7 @@ function Left(props) {
     return Widget.Box({
         spacing: 8,
         children: [
-            Workspaces(props),
+            Media(),
             ClientTitle(),
         ],
     })
@@ -180,7 +180,7 @@ function Center(props) {
     return Widget.Box({
         spacing: 8,
         children: [
-            Media(),
+            Workspaces(props),
             Notification(),
         ],
     })
@@ -188,20 +188,21 @@ function Center(props) {
 
 function Right(props) {
     return Widget.Box({
+
         hpack: "end",
         spacing: 8,
         children: [
             Volume(),
             BatteryLabel(),
-            Clock(),
             SysTray(),
+            Clock(),
         ],
     })
 }
 
 function Bar(monitor = 0) {
     return Widget.Window({
-        name: `bar-${monitor}`, // name has to be unique
+        name: `bar - ${monitor} `, // name has to be unique
         class_name: "bar",
         monitor,
         anchor: ["top", "left", "right"],
@@ -220,7 +221,6 @@ function Bar(monitor = 0) {
     })
 }
 App.config({
-    style: "./style.css",
     windows: hyprland.monitors.map((v) => Bar(v.id)),
 })
 

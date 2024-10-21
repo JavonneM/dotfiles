@@ -9,23 +9,27 @@ const date = Variable("", {
     poll: [1000, 'date "+%H:%M "'],
 })
 
+const workspaceConfiguration = {
+    ActiveIcon: "",
+    InactiveIcon: "",
+}
 // widgets can be only assigned as a child in one container
 // so to make a reuseable widget, make it a function
 // then you can simply instantiate one by calling it
-
-function Workspaces({ monitor = 0 }) {
+function Workspaces({ monitor = 0 }, wsConfig) {
     const activeWorkspaceId = hyprland.active.workspace.bind("id")
     const workspacesForMonitor = hyprland.bind("workspaces")
         .as(ws => ws.
             // Remove Scratch ws
             filter((v) => v.name != "special:magic").
-            filter((v) => v.monitorID == monitor)
+            filter((v) => v.monitorID == monitor).
+            sort((a, b) => a.id - b.id)
         )
     const merged = Utils.merge([activeWorkspaceId, workspacesForMonitor], (activeId, ws) => {
         return ws.map(
             (ws) => Widget.Button({
                 on_clicked: () => hyprland.messageAsync(`dispatch workspace ${ws.id}`),
-                child: Widget.Label(`${ws.id} ${activeId == ws.id ? "" : ""}`),
+                child: Widget.Label(`${ws.id} ${activeId == ws.id ? wsConfig.ActiveIcon : wsConfig.InactiveIcon}`),
                 class_name: `${activeId === ws.id ? "focused" : ""}`,
             })
         )
@@ -79,12 +83,13 @@ function Media() {
             const { track_artists, track_title } = mpris.players[0]
             return `${track_artists.join(", ")} - ${track_title} `
         } else {
+            console.log("nothing playing")
             return "Nothing is playing"
         }
     })
 
     return Widget.Button({
-        class_name: "media",
+        class_name: "pill",
         on_primary_click: () => mpris.getPlayer("")?.playPause(),
         on_scroll_up: () => mpris.getPlayer("")?.next(),
         on_scroll_down: () => mpris.getPlayer("")?.previous(),
@@ -93,7 +98,7 @@ function Media() {
 }
 
 
-function Volume() {
+function VolumeSlider() {
     const icons = {
         101: "overamplified",
         67: "high",
@@ -106,7 +111,7 @@ function Volume() {
         const icon = audio.speaker.is_muted ? 0 : [101, 67, 34, 1, 0].find(
             threshold => threshold <= audio.speaker.volume * 100)
 
-        return `audio - volume - ${icons[icon]} -symbolic`
+        return `audio - volume - ${icons[icon]} - symbolic`
     }
 
     const icon = Widget.Icon({
@@ -129,11 +134,84 @@ function Volume() {
     })
 }
 
+function AudioItem({
+    class_name,
+    stream,
+    get_icon,
+    get_label,
+    on_scroll_up,
+    on_scroll_down,
+    on_click,
+}) {
+    return Widget.Button({
+        class_name: class_name,
+        onScrollUp: on_scroll_up,
+        onScrollDown: on_scroll_down,
+        onClicked: on_click,
+        child: Widget.Box({
+            class_name: "",
+            children: [
+                //Widget.Icon({
+                //    class_name: "icon",
+                //    icon: Utils.watch(getIcon(), stream, getIcon),
+                //}),
+                Widget.Label({
+                    class_name: "label",
+                    label: Utils.watch(get_label(), stream, get_label)
+                }),
+                Widget.Label({
+                    class_name: "icon",
+                    label: Utils.watch(get_icon(), stream, get_icon)
+                }),
+            ],
+        })
+    })
+}
+function AudioTray() {
+    const icons = {
+        66: "",
+        33: "",
+        1: "",
+        0: "",
+    }
+
+    function getSpeakerIcon() {
+        const icon = audio.speaker.is_muted ? 0 : [66, 33, 1, 0].find(
+            threshold => threshold <= audio.speaker.volume * 100)
+        return ` ${icons[icon]}`
+    }
+    const micConfig = {
+        class_name: "microphone",
+        stream: audio.microphone,
+        get_icon: () => ` `,
+        get_label: () => `${Math.floor(audio.microphone.volume * 100)}%`,
+        on_scroll_up: () => audio.microphone.volume = Math.min(audio.microphone.volume + 0.10, 1),
+        on_scroll_down: () => audio.microphone.volume = Math.max(audio.microphone.volume - 0.10, 0),
+        on_click: () => { },
+    }
+    const speakerConfig = {
+        class_name: "speaker",
+        stream: audio.speaker,
+        get_icon: getSpeakerIcon,
+        get_label: () => `${Math.floor(audio.speaker.volume * 100)}%`,
+        on_scroll_up: () => audio.speaker.volume = Math.min(audio.speaker.volume + 0.10, 1),
+        on_scroll_down: () => audio.speaker.volume = Math.max(audio.speaker.volume - 0.10, 0),
+        on_click: () => { },
+    }
+
+    return Widget.Box({
+        class_name: "audio",
+        children: [
+            AudioItem(micConfig),
+            AudioItem(speakerConfig),
+        ],
+    })
+}
 
 function BatteryLabel() {
     const value = battery.bind("percent").as(p => p > 0 ? p / 100 : 0)
     const icon = battery.bind("percent").as(p =>
-        `battery - level - ${Math.floor(p / 10) * 10} -symbolic`)
+        `battery - level - ${Math.floor(p / 10) * 10} - symbolic`)
 
     return Widget.Box({
         class_name: "battery",
@@ -171,16 +249,19 @@ function Left(props) {
         spacing: 8,
         children: [
             Media(),
-            ClientTitle(),
+            //Widget.Label({ label: Utils.watch("", mpris, "play-back-status", () => mpris.players[0].play_back_status) }),
+
+            // ClientTitle(),
         ],
     })
 }
 
 function Center(props) {
     return Widget.Box({
-        spacing: 8,
+        class_name: "pill",
+        spacing: 4,
         children: [
-            Workspaces(props),
+            Workspaces(props, workspaceConfiguration),
             Notification(),
         ],
     })
@@ -188,12 +269,12 @@ function Center(props) {
 
 function Right(props) {
     return Widget.Box({
-
+        class_name: "pill",
         hpack: "end",
-        spacing: 8,
+        spacing: 4,
         children: [
-            Volume(),
-            BatteryLabel(),
+            AudioTray(),
+            //BatteryLabel(),
             SysTray(),
             Clock(),
         ],
@@ -221,6 +302,7 @@ function Bar(monitor = 0) {
     })
 }
 App.config({
+    style: './style.css',
     windows: hyprland.monitors.map((v) => Bar(v.id)),
 })
 

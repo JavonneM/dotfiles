@@ -1,3 +1,4 @@
+require("core.dap.adapters.dap-c")
 require("core.dap.adapters.dap-go")
 require("core.dap.adapters.dap-python")
 --require("core.dap.adapters.dap-flutter")

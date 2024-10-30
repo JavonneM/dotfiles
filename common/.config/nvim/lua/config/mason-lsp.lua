@@ -4,6 +4,8 @@ function Configure()
             --        "autopep8",
             --        "awk",
             "clangd",
+            -- "clang-format",
+            -- "codelldb",
             "cmake",
             --      "debugpy",
             "dockerls",

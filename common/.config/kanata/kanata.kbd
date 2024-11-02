@@ -2,7 +2,7 @@
   process-unmapped-keys yes
 )
 (defsrc
-  a s d f j k l ;
+  a s d f j k l ; home
 )
 (defvar
   tap-time 200
@@ -24,12 +24,13 @@
 ;; Empty layer
 ;; by default we dont do anything
 (deflayer empty
- _ _ _ _ _ _ _ _
+ _ _ _ _ _ _ _ _ @work
 )
 ;; second layer
 ;; activate for kanata
 (deflayer work
  @a-mod @s-mod @d-mod @f-mod
  @j-mod @k-mod @l-mod @;-mod
+ @work
 )
 

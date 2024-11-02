@@ -1,5 +1,6 @@
 (defcfg
   process-unmapped-keys yes
+  linux-dev /dev/input/by-id/usb-CM_Storm_Quickfire_Rapid_i-event-kbd
 )
 (defsrc
   a s d f j k l ; home

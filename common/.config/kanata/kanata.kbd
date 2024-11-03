@@ -21,6 +21,7 @@
   ;-mod (tap-hold $tap-time $hold-time ; rmet)
 
   work (layer-switch work)
+  empty (layer-switch empty)
 )
 ;; Empty layer
 ;; by default we dont do anything
@@ -32,6 +33,6 @@
 (deflayer work
  @a-mod @s-mod @d-mod @f-mod
  @j-mod @k-mod @l-mod @;-mod
- @work
+ @empty
 )
 

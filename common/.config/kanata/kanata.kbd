@@ -3,7 +3,7 @@
   linux-dev /dev/input/by-id/usb-CM_Storm_Quickfire_Rapid_i-event-kbd
 )
 (defsrc
-  a s d f j k l ; home lsgt
+  a s d f j k l ; pgup lsgt
 )
 (defvar
   tap-time 200

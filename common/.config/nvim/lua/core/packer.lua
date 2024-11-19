@@ -129,7 +129,7 @@ return require('packer').startup(function(use)
             if utils.isMacOS() then 
                 font = "FiraCode Nerd Font Mono=24"
             end
-            require("silicon").setup({
+            require("nvim-silicon").setup({
                 font = font,
                 output = function()
                     return "~/" .. os.date("!%Y-%m-%dT%H-%M-%S") .. "_code.png"

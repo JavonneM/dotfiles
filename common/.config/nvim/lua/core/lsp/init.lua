@@ -1,0 +1,6 @@
+require("core.lsp.c")
+require("core.lsp.go")
+require("core.lsp.python")
+vim.lsp.enable('clangd')
+vim.lsp.enable('gopls')
+vim.lsp.enable('pylsp')

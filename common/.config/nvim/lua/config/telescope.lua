@@ -35,5 +35,25 @@ function Configure()
     builtin.diagnostics,
         { desc = 'Telescope - [d]iagnostics' }
     )
+    vim.keymap.set('n', '<leader>sh',
+    builtin.search_history,
+        { desc = 'Telescope - [s]earch [h]istory' }
+    )
+    vim.keymap.set('n', '<leader>ch',
+    builtin.command_history,
+        { desc = 'Telescope - [c]ommand [h]istory' }
+    )
+    vim.keymap.set('n', '<leader>f',
+    builtin.quickfix,
+        { desc = 'Telescope - quick [f]ix' }
+    )
+    vim.keymap.set('n', '<leader>gt',
+    builtin.lsp_document_symbols,
+        { desc = 'Telescope - [g]o [t]o' }
+    )
+    vim.keymap.set('n', '<leader>h',
+    builtin.keymaps,
+        { desc = 'Telescope - [h]ints' }
+    )
 end
 return { Configure=Configure}

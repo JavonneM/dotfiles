@@ -1,70 +1,84 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
-
-local ensure_packer = function()
-    local fn = vim.fn
-    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-    if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
-        vim.cmd [[packadd packer.nvim]]
-        return true
-    end
-    return false
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
 end
-
-local packer_bootstrap = ensure_packer()
-
-return require('packer').startup(function(use)
-    use 'wbthomason/packer.nvim'
+vim.opt.rtp:prepend(lazypath)
+local plugins = {
     -- Fuzzy searcher
-    use {
+     {
         'nvim-telescope/telescope.nvim',
-        -- or                            , branch = '0.1.x',
-        requires = { { 'nvim-lua/plenary.nvim' } }
-    }
+        dependencies = { { 'nvim-lua/plenary.nvim' } }
+    },
     -- Color Themes
-    use "EdenEast/nightfox.nvim"
-    use 'folke/tokyonight.nvim'
-    use { "catppuccin/nvim", as = "catppuccin" }
+     "EdenEast/nightfox.nvim",
+     "folke/tokyonight.nvim",
+     { "catppuccin/nvim", as = "catppuccin" },
     -- Treesitter
-    use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
-    use('nvim-treesitter/playground')
+    {'nvim-treesitter/nvim-treesitter', build = ":TSUpdate",
+        opts = function(_, opts)
+            -- opts.ignore_install = { "help" }
+            -- opts.ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' }
+        end,
+    },
+    'nvim-treesitter/playground',
     -- Quick file access
-    -- use('theprimeagen/harpoon')
+    -- (theprimeagen/harpoon')
     -- Undo Tree
-    use('mbbill/undotree')
+    'mbbill/undotree',
 
     -- file explorer
 
-    use {
+     {
         "nvim-neo-tree/neo-tree.nvim",
         branch = "v2.x",
-        requires = {
+        dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
             "MunifTanjim/nui.nvim",
         }
-    }
+    },
 
     -- Status
-    use({
+    {
         "NTBBloodbath/galaxyline.nvim",
         config = function()
           require("galaxyline.themes.eviline")
         end,
-        requires = { "kyazdani42/nvim-web-devicons", opt = true }
-    })
+        dependencies = { "kyazdani42/nvim-web-devicons", opt = true }
+    },
     -- Tabline
-    -- use 'nanozuki/tabby.nvim'
+    --  'nanozuki/tabby.nvim'
 
     -- Git integration
-    -- use('tpope/vim-fugitive')
-    use('f-person/git-blame.nvim')
-    use('williamboman/mason.nvim')
+    -- (tpope/vim-fugitive')
+    -- 'f-person/git-blame.nvim'
+    'williamboman/mason.nvim',
     -- LSP
-    use 'neovim/nvim-lspconfig'
-    -- use {
+     'neovim/nvim-lspconfig',
+     {"folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
+        opts = {
+          library = {
+            -- See the configuration section for more details
+            -- Load luvit types when the `vim.uv` word is found
+            { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+          },
+        },
+    },
+    --  {
     --     'VonHeikemen/lsp-zero.nvim',
-    --     requires = {
+    --     dependencies = {
     --         -- LSP Support
     --         { 'neovim/nvim-lspconfig' },
     --         { 'williamboman/mason.nvim' },
@@ -84,9 +98,9 @@ return require('packer').startup(function(use)
     --     }
     -- }
     -- Debug adapter plugin
-    use {
+     {
         "mfussenegger/nvim-dap",
-        requires = {
+        dependencies = {
             "theHamsta/nvim-dap-virtual-text", -- shows test = "string" during debug
             "rcarriga/nvim-dap-ui",
             "nvim-neotest/nvim-nio",
@@ -98,37 +112,37 @@ return require('packer').startup(function(use)
             "mfussenegger/nvim-dap-python",
         },
 
-    }
+    },
     -- Debug adapter addtional
     -- Flutter
-    use {
+     {
         'akinsho/flutter-tools.nvim',
-        requires = {
+        dependencies = {
             'nvim-lua/plenary.nvim',
             'stevearc/dressing.nvim', -- optional for vim.ui.select
         },
-    }
+    },
     -- Node
     --[[
-    use {
+     {
         "microsoft/vscode-js-debug",
         opt = true,
         run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out"
     }
     --]]
     -- lint server/wrapper
-    -- use('mfussenegger/nvim-lint')
+    -- (mfussenegger/nvim-lint')
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
 
     -- Code Snapshots
-    use{
+    {
         "michaelrommel/nvim-silicon",
         cmd = "Silicon",
         config = function()
             local font = "FiraCode Nerd Font Mono=24"
             local utils = require("core.utils")
-            if utils.isMacOS() then 
+            if utils.isMacOS() then
                 font = "FiraCode Nerd Font Mono=24"
             end
             require("nvim-silicon").setup({
@@ -138,10 +152,9 @@ return require('packer').startup(function(use)
                 end
             })
         end
-    }
+    },
     -- Language stuff
-    use "elkowar/yuck.vim"
-    if packer_bootstrap then
-        require('packer').sync()
-    end
-end)
+     "elkowar/yuck.vim",
+}
+local opts = {}
+require("lazy").setup(plugins, opts)

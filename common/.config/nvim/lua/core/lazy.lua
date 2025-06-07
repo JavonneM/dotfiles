@@ -1,31 +1,33 @@
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
+    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_echo({
+            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+            { out,                            "WarningMsg" },
+            { "\nPress any key to exit..." },
+        }, true, {})
+        vim.fn.getchar()
+        os.exit(1)
+    end
 end
 vim.opt.rtp:prepend(lazypath)
 local plugins = {
     -- Fuzzy searcher
-     {
+    {
         'nvim-telescope/telescope.nvim',
         dependencies = { { 'nvim-lua/plenary.nvim' } }
     },
     -- Color Themes
-     "EdenEast/nightfox.nvim",
-     "folke/tokyonight.nvim",
-     { "catppuccin/nvim", as = "catppuccin" },
+    "EdenEast/nightfox.nvim",
+    "folke/tokyonight.nvim",
+    { "catppuccin/nvim", as = "catppuccin" },
     -- Treesitter
-    {'nvim-treesitter/nvim-treesitter', build = ":TSUpdate",
+    {
+        'nvim-treesitter/nvim-treesitter',
+        build = ":TSUpdate",
         opts = function(_, opts)
             -- opts.ignore_install = { "help" }
             -- opts.ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' }
@@ -39,7 +41,7 @@ local plugins = {
 
     -- file explorer
 
-     {
+    {
         "nvim-neo-tree/neo-tree.nvim",
         branch = "v2.x",
         dependencies = {
@@ -53,7 +55,7 @@ local plugins = {
     {
         "NTBBloodbath/galaxyline.nvim",
         config = function()
-          require("galaxyline.themes.eviline")
+            require("galaxyline.themes.eviline")
         end,
         dependencies = { "kyazdani42/nvim-web-devicons", opt = true }
     },
@@ -65,15 +67,16 @@ local plugins = {
     'f-person/git-blame.nvim',
     'williamboman/mason.nvim',
     -- LSP
-     'neovim/nvim-lspconfig',
-     {"folke/lazydev.nvim",
+    'neovim/nvim-lspconfig',
+    {
+        "folke/lazydev.nvim",
         ft = "lua", -- only load on lua files
         opts = {
-          library = {
-            -- See the configuration section for more details
-            -- Load luvit types when the `vim.uv` word is found
-            { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-          },
+            library = {
+                -- See the configuration section for more details
+                -- Load luvit types when the `vim.uv` word is found
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+            },
         },
     },
     --  {
@@ -98,7 +101,7 @@ local plugins = {
     --     }
     -- }
     -- Debug adapter plugin
-     {
+    {
         "mfussenegger/nvim-dap",
         dependencies = {
             "theHamsta/nvim-dap-virtual-text", -- shows test = "string" during debug
@@ -115,11 +118,20 @@ local plugins = {
     },
     -- Debug adapter addtional
     -- Flutter
-     {
+    {
         'akinsho/flutter-tools.nvim',
         dependencies = {
             'nvim-lua/plenary.nvim',
             'stevearc/dressing.nvim', -- optional for vim.ui.select
+        },
+    },
+    -- LLM
+    {
+        "olimorris/codecompanion.nvim",
+        opts = {},
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
         },
     },
     -- Node
@@ -154,7 +166,7 @@ local plugins = {
         end
     },
     -- Language stuff
-     "elkowar/yuck.vim",
+    "elkowar/yuck.vim",
 }
 local opts = {}
 require("lazy").setup(plugins, opts)

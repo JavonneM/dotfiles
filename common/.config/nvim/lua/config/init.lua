@@ -14,6 +14,7 @@ require("config.telescope").Configure()
 require("config.treesitter").Configure()
 require("config.undotree").Configure()
 
+require("config.codecompanion").Configure()
 require("config.silicon").Configure()
 require("config.diagnostics").Configure()
 -- config.ConfigureColours()

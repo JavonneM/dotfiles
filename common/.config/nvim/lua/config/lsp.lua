@@ -1,28 +1,41 @@
 function Configure()
-    vim.keymap.set('n', '<F3>',
-        vim.lsp.buf.format,
-        { desc = 'LSP - Format code' }
-    )
-    vim.keymap.set('n', '<leader>gd',
-        vim.lsp.buf.definition,
-        {desc = 'LSP - [G]o to [D]efinition'}
-    )
-    vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', {})
-    vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', {})
-    vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', {})
-    vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', {})
-    vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', {})
-    vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', {})
-    vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', {})
-    vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', {})
-    vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', {})
-    vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', {})
+    local style = '{border = "rounded"}'
+    vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, {
+        desc = 'LSP - [G]o to [D]efinition',
+    })
+    vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover('..style..')<cr>', {
+        desc = 'LSP - Show info'
+    })
+    vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition(' ..style..')<cr>', {
+        desc = 'LSP - [G]o to [D]efinition'
+    })
+    vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', {
+        desc = 'LSP - [G]o to [D]eclaration'
+    })
+    vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', {
+        desc = 'LSP - [G]o to [I]mplemention'
+    })
+    vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', {
+        desc = 'LSP - Show [G-I]mplemention'
+    })
+    vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', {
+        desc = 'LSP - Show [G-I]mplemention'
+    })
+    vim.keymap.set('n', 'cr', '<cmd>lua vim.lsp.buf.rename()<cr>', {
+        desc = 'LSP - Show [G-I]mplemention'
+    })
+    vim.keymap.set('n', 'cf', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', {
+        desc = 'LSP - [C]ode [F]ormat'
+    })
+    vim.keymap.set('n', 'ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', {
+        desc = 'LSP - [C]ode [A]ction'
+    })
 
 
     -- Something to do with omnifunc
-    vim.keymap.set('i', '<c-tab>', function()
-        vim.lsp.completion.get()
-    end)
+    -- vim.keymap.set('i', '<c-tab>', function()
+    --     vim.lsp.completion.get()
+    -- end)
 
     -- Set autocomplete behaviour
     vim.o.completeopt = "menu,menuone,noselect,preview"
@@ -41,9 +54,9 @@ function Configure()
     })
 
     -- Need to enable this in the language servers
-    vim.keymap.set("n","<leader>lh", function()
-            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-    end, { desc = "Toggle inlay hints"})
+    -- vim.keymap.set("n","<leader>lh", function()
+    --         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+    -- end, { desc = "Toggle inlay hints"})
 
 
     vim.keymap.set("i", "<Tab>", function()
@@ -55,7 +68,6 @@ function Configure()
     vim.keymap.set("i", "<CR>", function()
       return vim.fn.pumvisible() == 1 and "<C-y>" or "<CR>"
     end, { expr = true })
-
 end
 
 return { Configure = Configure }

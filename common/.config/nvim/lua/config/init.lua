@@ -15,6 +15,7 @@ require("config.treesitter").Configure()
 require("config.undotree").Configure()
 
 require("config.silicon").Configure()
+require("config.diagnostics").Configure()
 -- config.ConfigureColours()
 -- config.ConfigureGalaxyLine()
 -- config.ConfigureTreeSitter()

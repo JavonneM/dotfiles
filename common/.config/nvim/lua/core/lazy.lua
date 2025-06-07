@@ -62,7 +62,7 @@ local plugins = {
 
     -- Git integration
     -- (tpope/vim-fugitive')
-    -- 'f-person/git-blame.nvim'
+    'f-person/git-blame.nvim',
     'williamboman/mason.nvim',
     -- LSP
      'neovim/nvim-lspconfig',

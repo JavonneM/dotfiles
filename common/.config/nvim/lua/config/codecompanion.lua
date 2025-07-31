@@ -9,20 +9,20 @@ function SetupLLMs()
                 }
             }
         },
-        adapters = {
-            openai = function()
-                return require("codecompanion.adapters").extend("openai", {
-                    env = {
-                        api_key = "cmd:cat ~/.config/nvim/openai.key"
-                    },
-                    schema = {
-                        model = {
-                            default = "gpt-4.1",
-                        },
-                    },
-                })
-            end,
-        },
+        -- adapters = {
+        --     openai = function()
+        --         return require("codecompanion.adapters").extend("openai", {
+        --             env = {
+        --                 api_key = "cmd:cat ~/.config/nvim/openai.key"
+        --             },
+        --             schema = {
+        --                 model = {
+        --                     default = "gpt-4.1",
+        --                 },
+        --             },
+        --         })
+        --     end,
+        -- },
     })
 end
 

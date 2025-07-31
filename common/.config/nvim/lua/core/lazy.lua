@@ -130,6 +130,7 @@ local plugins = {
         "olimorris/codecompanion.nvim",
         opts = {},
         dependencies = {
+            -- "github/copilot.vim",
             "nvim-lua/plenary.nvim",
             "nvim-treesitter/nvim-treesitter",
         },

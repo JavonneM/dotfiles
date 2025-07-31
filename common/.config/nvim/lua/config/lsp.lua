@@ -38,7 +38,8 @@ function Configure()
     -- end)
 
     -- Set autocomplete behaviour
-    vim.o.completeopt = "menu,menuone,noselect,preview"
+    -- vim.o.completeopt = "menu,menuone,noselect,preview"
+    vim.o.completeopt = "menu,menuone,noselect"
 
     vim.api.nvim_create_autocmd("LspAttach", {
       callback = function(ev)

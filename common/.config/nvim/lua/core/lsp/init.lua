@@ -1,7 +1,11 @@
 require("core.lsp.c")
 require("core.lsp.go")
 require("core.lsp.python")
+require("core.lsp.typescript")
+require("core.lsp.xml")
 vim.lsp.enable('clangd')
-vim.lsp.enable('gopls')
+-- vim.lsp.enable('gopls') -- This with the setup call creates two instances
 vim.lsp.enable('pylsp')
 vim.lsp.enable('lua_ls')
+vim.lsp.enable('lemminx')
+vim.lsp.enable('ts_ls')

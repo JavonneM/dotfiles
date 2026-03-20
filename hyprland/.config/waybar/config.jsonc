@@ -37,7 +37,7 @@
     ],
     // Modules configuration
     "hyprland/workspaces": {
-        "format": "{name} {icon} {windows}",
+        "format": "{name} {icon}",
         "on-click": "activate",
         "format-icons": {
             "urgent": "",

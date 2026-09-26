@@ -16,7 +16,7 @@ install_oh_my_zsh() {
 
 
 install_hyprland() {
-    sudo pacman -S Hyprland qt5-wayland swaync waybar j4-dmenu-desktop bemenu hyprpaper wl-clipboard grimp slurp
+    sudo pacman -S hyprland qt5-wayland swaync waybar j4-dmenu-desktop bemenu hyprpaper wl-clipboard grim slurp
 }
 
 # Configure Git Config

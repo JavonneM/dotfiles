@@ -1,4 +1,4 @@
-sudo pacman -S git tmux kitty ttf-firacode-nerd nvim ttf-font-awesome stow atuin
+sudo pacman -S git tmux kitty ttf-firacode-nerd nvim ttf-font-awesome stow atuin zsh
 
 source setup_functions.sh
 configure_git_config

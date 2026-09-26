@@ -1,5 +1,6 @@
 require("core.lsp.c")
 require("core.lsp.go")
+require("core.lsp.rust")
 require("core.lsp.python")
 require("core.lsp.typescript")
 require("core.lsp.xml")

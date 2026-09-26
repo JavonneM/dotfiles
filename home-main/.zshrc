@@ -102,27 +102,35 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # 
-export LOCAL_LIB="/home/$USER/.lib"
-export LOCAL_CMAKE_INSTALL_PREFIX="$LOCAL_LIB/" 
+# export LOCAL_LIB="/home/$USER/.lib"
+# export LOCAL_CMAKE_INSTALL_PREFIX="$LOCAL_LIB/" 
+# 
+# export LOCAL_LIB_PATH="$LOCAL_LIB/lib"
+# export LOCAL_LIB_BIN_PATH="$LOCAL_LIB/bin"
+# export LOCAL_PKG_CONFIG_PATH="$LOCAL_LIB_PATH/pkgconfig"
 
-export LOCAL_LIB_PATH="$LOCAL_LIB/lib"
-export LOCAL_LIB_BIN_PATH="$LOCAL_LIB/bin"
-export LOCAL_PKG_CONFIG_PATH="$LOCAL_LIB_PATH/pkgconfig"
-
-# Updating global paths
-export PATH="$LOCAL_LIB_PATH:$PATH"
-export PKG_CONFIG_PATH="$LOCAL_PKG_CONFIG_PATH:$PKG_CONFIG_PATH" # for compile time pkg-config
-export LD_LIBRARY_PATH="$LOCAL_LIB_PATH:$LD_LIBRARY_PATH" # for runtime ld
-export LIBRARY_PATH="$LOCAL_LIB_PATH:$LIBRARY_PATH" # for compile time gcc
+# # Updating global paths
+# export PATH="$LOCAL_LIB_PATH:$PATH"
+# export PKG_CONFIG_PATH="$LOCAL_PKG_CONFIG_PATH:$PKG_CONFIG_PATH" # for compile time pkg-config
+# export LD_LIBRARY_PATH="$LOCAL_LIB_PATH:$LD_LIBRARY_PATH" # for runtime ld
+# export LIBRARY_PATH="$LOCAL_LIB_PATH:$LIBRARY_PATH" # for compile time gcc
 
 # Use tmux term value instead of oh-my-zsh
 if [[ -n "$BACKUP_TERM" ]]; then 
     export TERM="$BACKUP_TERM"
 fi
 
+export ANDROID_HOME="/home/$USER/Android/Sdk"
+
+export PATH="$PATH:$ANDROID_HOME/platform-tools"
 # local applications
 export PATH="/home/$USER/Applications/bin:$PATH"
 export PATH=$PATH:/usr/local/go/bin
+# Go cli apps
+export PATH="$PATH:/home/$USER/go/bin"
+# Rust cli apps
+export PATH="$PATH:/home/$USER/.cargo/bin"
+
 
 unsetopt share_history
 export NVM_DIR="$HOME/.nvm"

@@ -1,0 +1,18 @@
+# Default sound font
+set synth.default-soundfont /usr/share/soundfonts/freepats-general-midi.sf2
+# Audio
+set audio.driver pipewire
+
+# MIDI
+set midi.driver alsa_seq
+set midi.autoconnect yes
+
+# Increase overall synth gain
+set synth.gain 2.5
+
+# Polyphony
+set synth.polyphony 256
+
+# Reverb / chorus
+set synth.reverb.active no 
+set synth.chorus.active no

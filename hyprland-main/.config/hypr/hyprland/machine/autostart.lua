@@ -1,0 +1,8 @@
+hl.on("hyprland.start", function()
+    hl.exec_cmd("xrandr --output DP-3 --primary")
+    hl.exec_cmd("firefox", { workspace = "1 silent" })
+    hl.exec_cmd("kitty --start-as=minimized -e tmux -- a -t default", { workspace = "2 silent" })
+    hl.exec_cmd("steam", { workspace = "4 silent" })
+    hl.exec_cmd("lutris", { workspace = "4 silent" })
+    hl.exec_cmd("/home/javonne/Applications/bin/discord", { workspace = "3 silent" })
+end)

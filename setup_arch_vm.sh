@@ -7,5 +7,4 @@ install_hyprland
 
 stow common
 stow hyprland
-stow hyprland-main
-stow home-main
+stow hyprland-vm

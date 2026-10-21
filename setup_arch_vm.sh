@@ -4,6 +4,7 @@ source setup_functions.sh
 configure_git_config
 install_oh_my_zsh
 install_hyprland
+install_tpm
 
 stow common
 stow hyprland

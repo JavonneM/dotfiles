@@ -14,6 +14,10 @@ install_oh_my_zsh() {
     # echo "Please add\n'plugins=(git web-search)' and 'ZSH_THEME="agnoster"'\n above 'source \$ZSH/oh-my-zsh.sh' in ~/.zshrc"
 }
 
+install_tpm() {
+    git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+}
+
 
 install_hyprland() {
     sudo pacman -S hyprland qt5-wayland swaync waybar j4-dmenu-desktop bemenu hyprpaper wl-clipboard grim slurp

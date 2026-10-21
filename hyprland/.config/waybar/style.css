@@ -83,3 +83,32 @@ window#waybar {
     padding-left: 5px;
     padding-right: 5px;
 }
+
+/* power menu */
+menu {
+    background-color: #1e1e2e;
+    border: 1px solid #444444;
+    border-radius: 6px;
+    padding: 4px;
+}
+
+menuitem {
+    background-color: transparent;
+    color: #ffffff;
+    padding: 4px 12px;
+    border-radius: 4px;
+}
+
+menuitem:hover {
+    background-color: #3a3a4e;
+}
+
+menuitem label {
+    color: #ffffff;
+}
+
+separator {
+    background-color: #444444;
+    min-height: 1px;
+    margin: 4px 0;
+}

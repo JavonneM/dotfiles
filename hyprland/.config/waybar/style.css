@@ -6,7 +6,12 @@
 @define-color theme-color-border #3498db;
 @define-color theme-color-box-shadow rgba(0, 0, 0, 0.1);
 @define-color theme-color-pill-color rgba(255, 255, 255, 0.1);
+@define-color theme-color-text rgba(255, 255, 255, 1);
 
+
+* {
+    color: @theme-color-text;
+}
 /*@define-shadow tt 0 4px 6px rgba(0, 254, 0, 1);*/
 
 window#waybar {

@@ -8,7 +8,7 @@ set midi.driver alsa_seq
 set midi.autoconnect yes
 
 # Increase overall synth gain
-set synth.gain 2.5
+set synth.gain 0.6
 
 # Polyphony
 set synth.polyphony 256
